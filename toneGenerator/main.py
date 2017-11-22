@@ -1,7 +1,5 @@
 import pygame,numpy, struct, wave, math
 
-#pygame.init()
-#pygame.mixer.init()
 
 tau = 2 * numpy.pi
 

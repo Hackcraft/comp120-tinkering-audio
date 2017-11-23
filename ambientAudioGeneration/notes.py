@@ -70,14 +70,12 @@ class Notes:
         )
 
     def createNote(self, note):
-#        notes = self.noteToNumbers[note] is not None and float(self.noteToNumbers[note]) or note
         if not str.isdigit(note):
             if note in self.noteToNumbers:
                 note = self.noteToNumbers[note]
             else:
                 raise ValueError('createNote in class notes expected number or note. Given ' + str(type(note)))
 
-        print note
         frequency = 44.0 * 2 ** (note / 12.0)
 
         return self.createWave.sineWave(frequency)

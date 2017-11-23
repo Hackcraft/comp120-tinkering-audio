@@ -26,41 +26,34 @@ class CreateWave:
         self.FREQUENCY = frequency
         self.sampleLength = self.SAMPLE_RATE * self.DURATION
 
-    def sineWave(self, frequency = None, sampleRate = None, sampleLength = None, volume = None):
+    def sineWave(self, frequency = None):
         frequency = frequency or self.FREQUENCY
-        sampleRate = sampleRate or self.SAMPLE_RATE
-        sampleLength = sampleLength or self.SAMPLE_RATE
-        volume = volume or self.VOLUME
-
         values = []
-        for i in range(0, sampleLength):
-            value = math.sin(TAU * frequency * (float(i) / sampleRate)) * (volume * self.BIT_DEPTH)
+        for i in range(0, self.SAMPLE_RATE):
+            value = math.sin(TAU * frequency * (float(i) / self.SAMPLE_RATE)) * (self.VOLUME * self.BIT_DEPTH)
             for j in xrange(0, self.CHANNELS):
                 values.append(value)
 
         return values
 
-    def squareWave(self, frequency = None, sampleRate = None, sampleLength = None, volume = None):
+    def squareWave(self, frequency = None):
         frequency = frequency or self.FREQUENCY
-        sampleRate = sampleRate or self.SAMPLE_RATE
-        sampleLength = sampleLength or self.sampleLength
-        volume = volume or self.VOLUME
-
         values = []
-        for i in range(0, sampleLength):
-            value = 4 * (math.sin(frequency * (i / sampleRate)) * (volume * self.BIT_DEPTH)) / math.pi
+        for i in range(0, self.sampleLength):
+            value = 4 * (math.sin(frequency * (i / self.SAMPLE_RATE)) * (self.VOLUME * self.BIT_DEPTH)) / math.pi
 
             for j in xrange(0, self.CHANNELS):
                 values.append(value)
 
         return values
 
-    def sawToothWave(self, frequency, sample_rate, sample_length, volume):
+    def sawToothWave(self, frequency = None):
+        frequency = frequency or self.FREQUENCY
         values = []
-        for i in range(0, sample_length):
-            value = 2 * (math.sin(frequency * (i / sample_rate)) * (volume * BIT_DEPTH)) / -math.pi
+        for i in range(0, self.sampleLength):
+            value = 2 * (math.sin(frequency * (i / self.SAMPLE_RATE)) * (self.VOLUME * self.BIT_DEPTH)) / -math.pi
 
-            for j in xrange(0, CHANNELS):
+            for j in xrange(0, self.CHANNELS):
                 values.append(value)
 
         return values

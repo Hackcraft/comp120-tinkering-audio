@@ -13,9 +13,10 @@ class Notes:
         self.BIT_DEPTH = 65535 / 2
         self.CHANNELS = 2
         self.DURATION = 1  # seconds
-        self.VOLUME = 0.4
-        self.FREQUENCY = 150  # Hz
+        self.VOLUME = 0.9
+        self.FREQUENCY = 2000  # Hz
         self.sampleLength = self.SAMPLE_RATE * self.DURATION
+        # The numbers to calculate with frequency for the given note
         self.noteToNumbers = {
             "A" : 0,
             "A2" : 12,
@@ -45,6 +46,12 @@ class Notes:
         }
         self.createWave = CreateWave()
         self.updateCreateWave() # Update wave creator
+        # Add numerical references for the different wave creation algorithms for easy referencing
+        self.waveCreations = [
+            self.createWave.sineWave,
+            self.createWave.squareWave,
+            self.createWave.sawToothWave
+        ]
 
     def setValues(self, sampleWidth, sampleRate, bitDepth, channels, duration, volume, frequency):
         self.SAMPLE_WIDTH = sampleWidth
@@ -58,7 +65,7 @@ class Notes:
         self.updateCreateWave()  # Update wave creator
 
     def updateCreateWave(self):
-        # Update wave generator
+        # Keep the CreateWave class in sync with this
         self.createWave.setValues(
             self.SAMPLE_WIDTH,
             self.SAMPLE_RATE,
@@ -69,13 +76,20 @@ class Notes:
             self.FREQUENCY
         )
 
-    def createNote(self, note):
+    def createNote(self, note, wave = 0):
+        # Check for valid note
         if not str.isdigit(note):
             if note in self.noteToNumbers:
                 note = self.noteToNumbers[note]
             else:
-                raise ValueError('createNote in class notes expected number or note. Given ' + str(type(note)))
+                raise ValueError('createNote in class Notes, expected number or note. Given ' + str(type(note)))
 
+        # Check for valid wave
+        if wave < 0 or wave > len(self.waveCreations):
+            raise ValueError('createNote in class Notes, wave number out of bounds. Given ' + str(wave))
+
+        # Frequency of the given note
         frequency = 44.0 * 2 ** (note / 12.0)
 
-        return self.createWave.sineWave(frequency)
+        # Run the wanted wave generation algorithm with specified note, return the output
+        return self.waveCreations[wave](frequency)

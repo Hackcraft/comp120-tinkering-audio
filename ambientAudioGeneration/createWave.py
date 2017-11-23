@@ -31,6 +31,10 @@ class CreateWave:
         values = []
         for i in range(0, self.SAMPLE_RATE):
             value = math.sin(TAU * frequency * (float(i) / self.SAMPLE_RATE)) * (self.VOLUME * self.BIT_DEPTH)
+            # Clamp the value as it may go over/under
+            value = min(value, (65535 / 2))
+            value = max(value, -(65535 / 2))
+
             for j in xrange(0, self.CHANNELS):
                 values.append(value)
 
@@ -40,7 +44,10 @@ class CreateWave:
         frequency = frequency or self.FREQUENCY
         values = []
         for i in range(0, self.sampleLength):
-            value = 4 * (math.sin(frequency * (i / self.SAMPLE_RATE)) * (self.VOLUME * self.BIT_DEPTH)) / math.pi
+            value = 4 * (math.sin(frequency * (float(i) / self.SAMPLE_RATE)) * (self.VOLUME * self.BIT_DEPTH)) / math.pi
+            # Clamp the value as it was going over/under - but now clips
+            value = min(value, (65535 / 2))
+            value = max(value, -(65535 / 2))
 
             for j in xrange(0, self.CHANNELS):
                 values.append(value)
@@ -51,7 +58,10 @@ class CreateWave:
         frequency = frequency or self.FREQUENCY
         values = []
         for i in range(0, self.sampleLength):
-            value = 2 * (math.sin(frequency * (i / self.SAMPLE_RATE)) * (self.VOLUME * self.BIT_DEPTH)) / -math.pi
+            value = 2 * (math.sin(frequency * (float(i) / self.SAMPLE_RATE)) * (self.VOLUME * self.BIT_DEPTH)) / -math.pi
+            # Clamp the value as it may go over/under
+            value = min(value, (65535 / 2))
+            value = max(value, -(65535 / 2))
 
             for j in xrange(0, self.CHANNELS):
                 values.append(value)

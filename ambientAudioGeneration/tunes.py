@@ -14,8 +14,8 @@ class Tunes:
         self.notes = Notes()
 
         test = self.notes.createNote("A#2", 0)
-        test2 = self.notes.createNote("A#2", 1)
-        test3 = self.notes.createNote("A#2", 2)
+        test2 = self.notes.createNote("E", 1)
+        test3 = self.notes.createNote("E", 2)
 
         soundFunctions.saveWaveFile("test.wav", test, self.notes.SAMPLE_RATE, self.notes.CHANNELS, self.notes.SAMPLE_WIDTH)
         soundFunctions.saveWaveFile("test2.wav", test2, self.notes.SAMPLE_RATE, self.notes.CHANNELS, self.notes.SAMPLE_WIDTH)

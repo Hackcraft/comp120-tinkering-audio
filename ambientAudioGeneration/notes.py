@@ -85,7 +85,7 @@ class Notes:
                 raise ValueError('createNote in class Notes, expected number or note. Given ' + str(type(note)))
 
         # Check for valid wave
-        if wave < 0 or wave > len(self.waveCreations):
+        if wave < 0 or wave >= len(self.waveCreations):
             raise ValueError('createNote in class Notes, wave number out of bounds. Given ' + str(wave))
 
         # Frequency of the given note

@@ -1,9 +1,23 @@
 import math, pygame
-from sounds import *
+
+from tunes import *
 
 """
     ambience contains the different ambient noise scenarios,
     their sound files and the probability of them playing.
+    
+    Classes:
+        CreateWave
+            Make sound - No cache
+        Notes
+            Contains notes - No cache
+        SoundFunctions
+            Contains echo etc - No cache
+        Tunes
+            Contains tunes - Cached
+        
+        Main
+            Writes file for the selected atmosphere at set length using random tunes suitable for the atmosphere.
 """
 
 ambienceTags = [
@@ -12,11 +26,7 @@ ambienceTags = [
     "Towns"
 ]
 
-soundRef = Sounds()
-fiveSecondSounds = {}
-
-fiveSecondSounds['bird'] = soundRef.makeSound("bird.wav")
-soundRef.playSound(fiveSecondSounds['bird'])
+tunes = Tunes()
 
 """
     Gui

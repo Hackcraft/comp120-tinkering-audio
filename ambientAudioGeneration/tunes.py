@@ -3,7 +3,7 @@ import math
 import struct
 
 from soundFunctions import *
-from createWave import *
+from notes import *
 
 class Tunes:
 

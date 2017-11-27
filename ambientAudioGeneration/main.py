@@ -1,30 +1,33 @@
-import math, pygame
+import math
+import pygame
+
+from tunes import *
 
 """
     ambience contains the different ambient noise scenarios,
     their sound files and the probability of them playing.
+    
+    Classes:
+        CreateWave
+            Make sound - No cache
+        Notes
+            Contains notes - No cache
+        SoundFunctions
+            Contains echo etc - No cache
+        Tunes
+            Contains tunes - Cached
+        
+        Main
+            Writes file for the selected atmosphere at set length using random tunes suitable for the atmosphere.
 """
 
-ambience = {
-    "Forests" : [
-        # Sound one
-        [
-            # Load file
-            # Probability of it playing
-        ],
-        # Sound two
-        [
-            # Load file
-            # Probability of it playing
-        ],
-    ],
-    "Towns" : [
+ambienceTags = [
+    "Caves",
+    "Forests",
+    "Towns"
+]
 
-    ],
-    "Caves" : [
-
-    ]
-}
+tunes = Tunes()
 
 """
     Gui
@@ -35,12 +38,12 @@ screenX, screenY = 800, 600
 screen = pygame.display.set_mode((screenX, screenY))
 
 # Button text
-buttonTextSize = screenX / len(ambience) / 2
+buttonTextSize = screenX / len(ambienceTags) / 2
 buttonTextFont = pygame.font.SysFont("monospace", buttonTextSize)
 
 buttonText = []
-for place in sorted(ambience.items()): # Go through the dictionary in alphabetical order
-    buttonText.append(buttonTextFont.render(place[0], 1, (0,0,0)))
+for place in ambienceTags: # Go through the dictionary in alphabetical order
+    buttonText.append(buttonTextFont.render(place, 1, (0,0,0)))
 
 blnRunning = True
 while blnRunning:
@@ -59,13 +62,14 @@ while blnRunning:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             blnRunning = False
-            pygame.quit()
         # Button actions
         elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             mouseX, mouseY = pygame.mouse.get_pos()
             if mouseY < buttonTextSize:
-                print sorted(ambience.items())[0][0] # Caves
+                print ambienceTags[0] # Caves
             elif mouseY < buttonTextSize * 2:
-                print sorted(ambience.items())[1][0] # Forests
+                print ambienceTags[1] # Forests
             elif mouseY < buttonTextSize * 3:
-                print sorted(ambience.items())[2][0] # Towns
+                print ambienceTags[2] # Towns
+
+pygame.quit()

@@ -53,12 +53,8 @@ class Notes:
             else:
                 raise ValueError('createNote in class Notes, expected number or note. Given ' + str(type(note)))
 
-        # Check for valid wave
-        if wave < 0 or wave >= len(self.createWave.waveCreations):
-            raise ValueError('createNote in class Notes, wave number out of bounds. Given ' + str(wave))
-
         # Frequency of the given note
         frequency = 44.0 * 2 ** (note / 12.0)
 
         # Run the wanted wave generation algorithm with specified note, return the output
-        return self.createWave.waveCreations[wave](frequency)
+        return self.createWave.makeWave(wave, frequency)

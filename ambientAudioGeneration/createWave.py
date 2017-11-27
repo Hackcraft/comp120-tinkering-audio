@@ -21,6 +21,13 @@ class CreateWave:
     def setValues(self, values):
         self.variables.setValues(values)
 
+    def makeWave(self, wave, frequency):
+        # Check for valid wave
+        if wave < 0 or wave >= len(self.waveCreations):
+            raise ValueError('createNote in class Notes, wave number out of bounds. Given ' + str(wave))
+        return self.waveCreations[wave](frequency)
+
+
     def sineWave(self, frequency = None):
         frequency = frequency or self.variables.FREQUENCY
         values = []

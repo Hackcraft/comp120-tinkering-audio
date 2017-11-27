@@ -8,12 +8,14 @@ class SoundFunctions:
         print "Loaded SoundFunctions"
 
     def combineTones(self, toneOne, toneTwo, sampleLength):
+        sampleLength = sampleLength.variables.sampleLength
         values = []
         for i in range(0, sampleLength):
             values.append(toneOne[i] + toneTwo[i])
         return values
 
     def makeChord(self, sound1, sound2, sound3, sampleLength):
+        sampleLength = sampleLength.variables.sampleLength
         values = []
         for i in range(0, sampleLength):
             values.append(sound1[i])
@@ -25,6 +27,7 @@ class SoundFunctions:
         return values
 
     def echo(self, sound1, sound2, delay, sampleLength):
+        sampleLength = sampleLength.variables.sampleLength
         values = []
         for i in range(0, sampleLength):
             values.append(sound1[i])
@@ -33,14 +36,14 @@ class SoundFunctions:
                 values.append(echo + sound1[i])
         return values
 
-    def saveWaveFile(self, filename, wavData, sampleRate, channels, sampleWidth):
+    def saveWaveFile(self, filename, wavData, sound):
         packedValues = []
         for i in range(0, len(wavData)):
             packedValue = struct.pack('h', wavData[i])
             packedValues.append(packedValue)
 
         noiseOut = wave.open(filename, 'w')
-        noiseOut.setparams((channels, sampleWidth, sampleRate, 0, 'NONE', 'not compressed'))
+        noiseOut.setparams((sound.CHANNELS, sound.SAMPLE_WIDTH, sound.SAMPLE_RATE, 0, 'NONE', 'not compressed'))
         valueStr = ''.join((str(n) for n in packedValues))
         noiseOut.writeframes(valueStr)
         noiseOut.close()

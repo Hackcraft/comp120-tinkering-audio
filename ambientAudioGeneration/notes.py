@@ -3,19 +3,13 @@ import math
 import struct
 
 from createWave import *
+from soundVariables import *
 
 class Notes:
 
     def __init__(self):
         print "Loaded Notes"
-        self.SAMPLE_WIDTH = 2
-        self.SAMPLE_RATE = 44100
-        self.BIT_DEPTH = 65535 / 2
-        self.CHANNELS = 2
-        self.DURATION = 1  # seconds
-        self.VOLUME = 0.9
-        self.FREQUENCY = 2000  # Hz
-        self.sampleLength = self.SAMPLE_RATE * self.DURATION
+        self.variables = SoundVariables()
         # The numbers to calculate with frequency for the given note
         self.noteToNumbers = {
             "A" : 0,
@@ -45,36 +39,11 @@ class Notes:
             "G#2" : 11,
         }
         self.createWave = CreateWave()
-        self.updateCreateWave() # Update wave creator
-        # Add numerical references for the different wave creation algorithms for easy referencing
-        self.waveCreations = [
-            self.createWave.sineWave,
-            self.createWave.squareWave,
-            self.createWave.sawToothWave
-        ]
 
-    def setValues(self, sampleWidth, sampleRate, bitDepth, channels, duration, volume, frequency):
-        self.SAMPLE_WIDTH = sampleWidth
-        self.SAMPLE_RATE = sampleRate
-        self.BIT_DEPTH = bitDepth
-        self.CHANNELS = channels
-        self.DURATION = duration
-        self.VOLUME = volume
-        self.FREQUENCY = frequency
-        self.sampleLength = self.SAMPLE_RATE * self.DURATION
-        self.updateCreateWave()  # Update wave creator
-
-    def updateCreateWave(self):
+    def setValues(self, values):
+        self.variables.setValues(values)
         # Keep the CreateWave class in sync with this
-        self.createWave.setValues(
-            self.SAMPLE_WIDTH,
-            self.SAMPLE_RATE,
-            self.BIT_DEPTH,
-            self.CHANNELS,
-            self.DURATION,
-            self.VOLUME,
-            self.FREQUENCY
-        )
+        self.createWave.setValues(values)
 
     def createNote(self, note, wave = 0):
         # Check for valid note
@@ -85,11 +54,11 @@ class Notes:
                 raise ValueError('createNote in class Notes, expected number or note. Given ' + str(type(note)))
 
         # Check for valid wave
-        if wave < 0 or wave >= len(self.waveCreations):
+        if wave < 0 or wave >= len(self.createWave.waveCreations):
             raise ValueError('createNote in class Notes, wave number out of bounds. Given ' + str(wave))
 
         # Frequency of the given note
         frequency = 44.0 * 2 ** (note / 12.0)
 
         # Run the wanted wave generation algorithm with specified note, return the output
-        return self.waveCreations[wave](frequency)
+        return self.createWave.waveCreations[wave](frequency)

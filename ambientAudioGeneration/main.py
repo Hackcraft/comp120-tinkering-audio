@@ -42,8 +42,8 @@ buttonTextSize = screenX / len(ambienceTags) / 2
 buttonTextFont = pygame.font.SysFont("monospace", buttonTextSize)
 
 buttonText = []
-for place in ambienceTags: # Go through the dictionary in alphabetical order
-    buttonText.append(buttonTextFont.render(place, 1, (0,0,0)))
+for place in ambienceTags:  # Go through the dictionary in alphabetical order
+    buttonText.append(buttonTextFont.render(place, 1, (0, 0, 0)))
 
 blnRunning = True
 while blnRunning:
@@ -66,10 +66,10 @@ while blnRunning:
         elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             mouseX, mouseY = pygame.mouse.get_pos()
             if mouseY < buttonTextSize:
-                print ambienceTags[0] # Caves
+                print ambienceTags[0]  # Caves
             elif mouseY < buttonTextSize * 2:
-                print ambienceTags[1] # Forests
+                print ambienceTags[1]  # Forests
             elif mouseY < buttonTextSize * 3:
-                print ambienceTags[2] # Towns
+                print ambienceTags[2]  # Towns
 
 pygame.quit()

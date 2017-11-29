@@ -3,6 +3,7 @@ from notes import *
 
 soundFunctions = SoundFunctions()
 
+
 class Tunes:
 
     def __init__(self):
@@ -32,13 +33,12 @@ class Tunes:
 
         soundFunctions.saveWaveFile("test4.wav", tune, soundData)
 
-
     def arrayToTune(self, array, soundData):
         values = []
 
         # Go through each note
         for note in array:
-            if len(note) >= 3: # If given new sound data, update
+            if len(note) >= 3:  # If given new sound data, update
                 self.notes.setValues(note[2])
             block = self.notes.createNote(note[0], 1)
             for bit in block:

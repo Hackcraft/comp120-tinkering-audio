@@ -2,6 +2,7 @@ import wave
 import math
 import struct
 
+
 class SoundFunctions:
 
     def __init__(self):
@@ -47,4 +48,3 @@ class SoundFunctions:
         valueStr = ''.join((str(n) for n in packedValues))
         noiseOut.writeframes(valueStr)
         noiseOut.close()
-
